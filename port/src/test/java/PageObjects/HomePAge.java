@@ -13,7 +13,7 @@ public class HomePAge extends BaseObject {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@FindBy(xpath="(//div[@role='Combobox']/p)[2]")
 	WebElement src;
 	@FindBy(xpath="//input[contains(@id,'input-with-icon-adornment')]")
@@ -34,60 +34,64 @@ public class HomePAge extends BaseObject {
 	WebElement txtadult;
 	@FindBy(xpath="//button[normalize-space()='Search']")
 	WebElement searchbtn;
-	
+	@FindBy(xpath="(//div[contains(@class,'SearchPanel')]//a[contains(@href,'hotel')]//button)[1]")
+	WebElement htl;
 	public void setSrc(String value) throws InterruptedException {
-        src.click();
-        srcname.sendKeys(value);
-        Thread.sleep(1000);
-        autosug.click();
-    }
+		src.click();
+		srcname.sendKeys(value);
+		Thread.sleep(1000);
+		autosug.click();
+	}
 
-    public void setDest(String value) {
-        dest.click();
-        srcname.sendKeys(value);
-        autosug.click();
-    }
+	public void setDest(String value) throws InterruptedException {
+		dest.click();
+		srcname.sendKeys(value);
+		Thread.sleep(1000);
+		autosug.click();
+	}
+	public void opencalendar() {
+		cl.click();
+	}
+	public void calender(String mnth) {
 
-    public void calender(String mnth) {
-        cl.click();
-        int tmonth=Month.valueOf(mnth.toUpperCase()).getValue();
-        String crmnth=crmnt.getText().split(" ")[0];
-        int crmonth=Month.valueOf(crmnth.toUpperCase()).getValue();
-        while(tmonth!=crmonth) {
-        	System.out.println(tmonth);
-        	System.out.println(crmonth);
-        	
-             
-        	nxtmnth.click();
-        	 crmnth=crmnt.getText().split(" ")[0];
-             crmonth=Month.valueOf(crmnth.toUpperCase()).getValue();
-        }
-    }
+		int tmonth=Month.valueOf(mnth.toUpperCase()).getValue();
+		String crmnth=crmnt.getText().split(" ")[0];
+		int crmonth=Month.valueOf(crmnth.toUpperCase()).getValue();
+		while(tmonth!=crmonth) {
 
-    public void clickPrice() {
-        int min=Integer.MAX_VALUE;
-        WebElement k=null;
-        
-    	for(WebElement e:price) {
-    		int price=Integer.parseInt(e.getAttribute("textContent").replaceAll("[^0-9]", "").trim());
-    		System.out.println(price);
-    		if(min>price) {
-    			min=price;
-    			k=e;
-    			
-    		}
-    	}
-    	js.executeScript("arguments[0].click();", k);
-    }
 
-   
 
-   public void clicksearch() {
-	   searchbtn.click();
-   }
+			nxtmnth.click();
+			crmnth=crmnt.getText().split(" ")[0];
+			crmonth=Month.valueOf(crmnth.toUpperCase()).getValue();
+		}
+	}
 
-    public void selectTxtadult() {
-        txtadult.click();
-    }
-	
+	public void clickPrice() {
+		int min=Integer.MAX_VALUE;
+		WebElement k=null;
+
+		for(WebElement e:price) {
+			int price=Integer.parseInt(e.getAttribute("textContent").replaceAll("[^0-9]", "").trim());
+
+			if(min>price) {
+				min=price;
+				k=e;
+
+			}
+		}
+		js.executeScript("arguments[0].click();", k);
+	}
+
+
+
+	public void clicksearch() {
+		searchbtn.click();
+	}
+
+	public void selectTxtadult() {
+		txtadult.click();
+	}
+
+
 }

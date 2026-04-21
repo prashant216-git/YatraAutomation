@@ -59,6 +59,7 @@ Properties prop;
 		prop.load(fl);
 		logger.info("opening info");
 		driver.get(prop.getProperty("Url"));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 	}
 	
 	

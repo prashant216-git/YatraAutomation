@@ -1,12 +1,13 @@
 PageObjects\HomePAge.class
-TestCases\Signintest.class
 utilities\Excelutilities.class
-PageObjects\Sign_in_page.class
 TestCases\Cheapflight_test.class
 utilities\Dataproviders.class
 TestCases\Hotels.class
-TestCases\BaseTest.class
 PageObjects\BaseObject.class
-TestCases\BrokenlinkTest.class
 PageObjects\Hotelspage.class
+TestCases\Signintest.class
+PageObjects\Sign_in_page.class
+TestCases\Multicityflight.class
+TestCases\BaseTest.class
+TestCases\BrokenlinkTest.class
 PageObjects\Calender.class

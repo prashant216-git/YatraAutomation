@@ -1,11 +1,16 @@
 package PageObjects;
 
+import java.time.Duration;
 import java.time.Month;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePAge extends BaseObject {
 
@@ -36,6 +41,10 @@ public class HomePAge extends BaseObject {
 	WebElement searchbtn;
 	@FindBy(xpath="(//div[contains(@class,'SearchPanel')]//a[contains(@href,'hotel')]//button)[1]")
 	WebElement htl;
+	@FindBy(xpath="//button[contains(.,'Add Another City')]")
+	WebElement addbtn;
+	@FindBy(xpath="(//input[@name='controlled-radio-buttons-group'])[3]")
+	WebElement radiomulti;
 	public void setSrc(String value) throws InterruptedException {
 		src.click();
 		srcname.sendKeys(value);
@@ -94,4 +103,86 @@ public class HomePAge extends BaseObject {
 	}
 
 
+
+public void multicity(int citycount,List<String> names) throws InterruptedException {
+		int count=citycount;
+
+		if(citycount<2){
+			System.out.println("City count is less than 2");
+		}
+
+		else{
+			try{
+				Thread.sleep(2000);
+			} catch(InterruptedException e){}
+
+			int i=1;
+
+			if(names.size()/2!=citycount) {
+				System.out.println("not a valid list of cities");
+			}
+			else{
+
+				// ✅ FIRST: enter 4 entries (2 cities)
+				int firstBatch = 4;
+
+				while(i <= firstBatch && i < names.size()) {
+
+					String locat = "(//div[contains(@aria-label,'inputbox') and @role='Combobox'])[" + i+"]";
+					WebElement k = driver.findElement(By.xpath(locat));
+					act.moveToElement(k);
+					k.click();
+					srcname.sendKeys(names.get(i-1));
+					i++;
+
+					try{ Thread.sleep(1000);} catch(InterruptedException e){}
+					autosug.click();
+				}
+
+				// ✅ AFTER first 4 entries → check and click add
+				if(count != 2){
+					js.executeScript("arguments[0].click();",addbtn);
+					System.out.println("yes clicked add");
+					count--;
+				}
+
+				// ✅ NOW: only 2 entries per loop
+				while(i < names.size()) {
+
+					// first field
+					String locat = "(//div[contains(@aria-label,'inputbox') and @role='Combobox'])[" + i+"]";
+					WebElement k = driver.findElement(By.xpath(locat));
+					act.moveToElement(k);
+					k.click();
+					srcname.sendKeys(names.get(i-1));
+					i++;
+
+					try{ Thread.sleep(1000);} catch(InterruptedException e){}
+					autosug.click();
+
+					// second field
+					locat = "(//div[contains(@aria-label,'inputbox') and @role='Combobox'])[" + i+"]";
+					k = driver.findElement(By.xpath(locat));
+					act.moveToElement(k);
+					k.click();
+					srcname.sendKeys(names.get(i-1));
+					i++;
+
+					try{ Thread.sleep(1000);} catch(InterruptedException e){}
+					autosug.click();
+
+					// click add if more cities remaining
+					if(count != 2){
+						js.executeScript("arguments[0].click();",addbtn);
+						System.out.println("yes clicked add");
+						count--;
+					}
+				}
+			}
+		}
+	}
+
+public void openmulticity(){
+	radiomulti.click();
+}
 }
